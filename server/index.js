@@ -5,9 +5,9 @@ import mongoose from 'mongoose'
 import { Server } from 'socket.io'
 import { ALLOWED_ORIGIN, MONGODB_URI } from './config.js'
 import onConnection from './socket_io/onConnection.js'
+import { getFilePath } from './utils/file.js'
 import onError from './utils/onError.js'
 import upload from './utils/upload.js'
-import { getFilePath } from './utils/file.js'
 
 const app = express()
 
@@ -19,35 +19,40 @@ app.use(
 app.use(express.json())
 
 app.use('/upload', upload.single('file'), (req, res) => {
+  if (!req.file) return res.sendStatus(400)
+
   const relativeFilePath = req.file.path
     .replace(/\\/g, '/')
     .split('server/files')[1]
+
   res.status(201).json(relativeFilePath)
 })
 
 app.use('/files', (req, res) => {
   const filePath = getFilePath(req.url)
+
   res.status(200).sendFile(filePath)
 })
 
 app.use(onError)
-
-const server = createServer(app)
 
 try {
   await mongoose.connect(MONGODB_URI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
   })
-  console.log('🚀 Connected to DB')
+  console.log('🚀 Connected')
 } catch (e) {
-  console.log(e)
+  onError(e)
 }
+
+const server = createServer(app)
 
 const io = new Server(server, {
   cors: ALLOWED_ORIGIN,
   serveClient: false
 })
+
 io.on('connection', (socket) => {
   onConnection(io, socket)
 })

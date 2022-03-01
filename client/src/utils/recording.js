@@ -19,7 +19,7 @@ export const videoConstraints = {
   }
 }
 
-export const isRecordStarted = () => !!mediaRecorder
+export const isRecordingStarted = () => !!mediaRecorder
 
 export const pauseRecording = () => {
   mediaRecorder.pause()
@@ -56,7 +56,7 @@ export const stopRecording = () => {
     t.stop()
   })
 
-  const type = mediaConstraints['video'] ? 'video' : 'audio'
+  const type = mediaConstraints.video ? 'video' : 'audio'
   const file = new File(mediaChunks, 'my_record.webm', {
     type: `${type}/webm`
   })

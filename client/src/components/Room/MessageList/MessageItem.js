@@ -16,6 +16,7 @@ export default function MessageItem({ message, removeMessage }) {
   let element
 
   const { messageType, textOrPathToFile } = message
+
   const pathToFile = `${SERVER_URI}/files${textOrPathToFile}`
 
   switch (messageType) {
@@ -45,16 +46,16 @@ export default function MessageItem({ message, removeMessage }) {
       return null
   }
 
-  const myMessage = user.userId === message.userId
+  const isMyMessage = user.userId === message.userId
 
   return (
-    <li className={`item message ${myMessage ? 'my' : ''}`}>
-      <p className='username'>{myMessage ? 'Me' : message.userName}</p>
+    <li className={`item message ${isMyMessage ? 'my' : ''}`}>
+      <p className='username'>{isMyMessage ? 'Me' : message.userName}</p>
 
       <div className='inner'>
         {element}
 
-        {myMessage && (
+        {isMyMessage && (
           <button className='btn' onClick={() => removeMessage(message)}>
             <CgTrashEmpty className='icon remove' />
           </button>

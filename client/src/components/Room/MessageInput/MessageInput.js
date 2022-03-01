@@ -47,11 +47,15 @@ export default function MessageInput({ sendMessage }) {
       message.messageType = 'text'
       message.textOrPathToFile = text
     } else {
-      const path = await fileApi.upload({ file, roomId })
-      const type = file.type.split('/')[0]
+      try {
+        const path = await fileApi.upload({ file, roomId })
+        const type = file.type.split('/')[0]
 
-      message.messageType = type
-      message.textOrPathToFile = path
+        message.messageType = type
+        message.textOrPathToFile = path
+      } catch (e) {
+        console.error(e)
+      }
     }
 
     sendMessage(message)
@@ -74,7 +78,7 @@ export default function MessageInput({ sendMessage }) {
         ref={inputRef}
         disabled={showPreview}
       />
-      <button className='btn' disabled={submitDisabled} type='submit'>
+      <button className='btn' type='submit' disabled={submitDisabled}>
         <FiSend className='icon' />
       </button>
     </form>

@@ -3,7 +3,7 @@ import { useRef, useState } from 'react'
 import { BsFillPauseFill, BsFillPlayFill, BsFillStopFill } from 'react-icons/bs'
 import {
   audioConstraints,
-  isRecordStarted,
+  isRecordingStarted,
   pauseRecording,
   resumeRecording,
   startRecording,
@@ -11,19 +11,17 @@ import {
   videoConstraints
 } from 'utils/recording'
 
-export default function Modal({ setShowModal }) {
+export default function RecordingModal({ setShowModal }) {
   const setFile = useStore(({ setFile }) => setFile)
   const [constraints, setConstraints] = useState(audioConstraints)
   const [recording, setRecording] = useState(false)
   const selectBlockRef = useRef()
   const videoRef = useRef()
 
-  const onChange = ({ target: { value } }) => {
-    if (value === 'audio') {
-      return setConstraints(audioConstraints)
-    }
-    setConstraints(videoConstraints)
-  }
+  const onChange = ({ target: { value } }) =>
+    value === 'audio'
+      ? setConstraints(audioConstraints)
+      : setConstraints(videoConstraints)
 
   const pauseResume = () => {
     if (recording) {
@@ -35,7 +33,7 @@ export default function Modal({ setShowModal }) {
   }
 
   const start = async () => {
-    if (isRecordStarted()) {
+    if (isRecordingStarted()) {
       return pauseResume()
     }
 
@@ -45,7 +43,7 @@ export default function Modal({ setShowModal }) {
 
     selectBlockRef.current.style.display = 'none'
 
-    if (constraints['video'] && stream) {
+    if (constraints.video && stream) {
       videoRef.current.style.display = 'block'
       videoRef.current.srcObject = stream
     }
@@ -78,7 +76,7 @@ export default function Modal({ setShowModal }) {
           </select>
         </div>
 
-        {isRecordStarted() && <p>{recording ? 'Recording...' : 'Paused'}</p>}
+        {isRecordingStarted() && <p>{recording ? 'Recording...' : 'Paused'}</p>}
 
         <video ref={videoRef} autoPlay />
 
@@ -90,7 +88,7 @@ export default function Modal({ setShowModal }) {
               <BsFillPlayFill className='icon' />
             )}
           </button>
-          {isRecordStarted() && (
+          {isRecordingStarted() && (
             <button className='btn stop' onClick={stop}>
               <BsFillStopFill className='icon' />
             </button>

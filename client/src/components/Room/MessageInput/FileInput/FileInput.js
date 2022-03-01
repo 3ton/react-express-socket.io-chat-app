@@ -1,7 +1,7 @@
 import useStore from 'hooks/useStore'
 import { useEffect, useRef } from 'react'
 import { MdAttachFile } from 'react-icons/md'
-import FilePreview from '../FilePreview/FilePreview'
+import FilePreview from './FilePreview'
 
 export default function FileInput() {
   const { file, setFile } = useStore(({ file, setFile }) => ({ file, setFile }))
@@ -29,6 +29,7 @@ export default function FileInput() {
       >
         <MdAttachFile className='icon' />
       </button>
+
       {file && <FilePreview />}
     </div>
   )

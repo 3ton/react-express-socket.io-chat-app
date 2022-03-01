@@ -1,7 +1,7 @@
 import useStore from 'hooks/useStore'
 import { useState } from 'react'
 import { RiRecordCircleLine } from 'react-icons/ri'
-import Modal from './Modal'
+import RecordingModal from './RecordingModal'
 
 export default function Recorder() {
   const showPreview = useStore(({ showPreview }) => showPreview)
@@ -17,7 +17,7 @@ export default function Recorder() {
       >
         <RiRecordCircleLine className='icon' />
       </button>
-      {showModal && <Modal showModal={showModal} setShowModal={setShowModal} />}
+      {showModal && <RecordingModal setShowModal={setShowModal} />}
     </div>
   )
 }

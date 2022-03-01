@@ -11,12 +11,12 @@ export const NameInput = () => {
   const [submitDisabled, setSubmitDisabled] = useState(true)
 
   useEffect(() => {
-    const isSomeFieldEmpty = Object.values(formData).some((v) => !v)
+    const isSomeFieldEmpty = Object.values(formData).some((v) => !v.trim())
     setSubmitDisabled(isSomeFieldEmpty)
   }, [formData])
 
   const onChange = ({ target: { name, value } }) => {
-    setFormData({ ...formData, [name]: value.trim() })
+    setFormData({ ...formData, [name]: value })
   }
 
   const onSubmit = (e) => {

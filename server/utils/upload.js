@@ -12,7 +12,7 @@ const upload = multer({
       const dirPath = join(_dirname, '../files', roomId)
 
       if (!existsSync(dirPath)) {
-        mkdirSync(dirPath)
+        mkdirSync(dirPath, { recursive: true })
       }
 
       cb(null, dirPath)

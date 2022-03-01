@@ -22,4 +22,6 @@ const upload = async ({ file, roomId }) => {
   }
 }
 
-export default { upload }
+const fileApi = { upload }
+
+export default fileApi

@@ -11,12 +11,28 @@ import Recorder from './Recorder/Recorder'
 
 export default function MessageInput({ sendMessage }) {
   const user = storage.get(USER_KEY)
-  const { file, setFile, showPreview, setShowPreview } = useStore(
-    ({ file, setFile, showPreview, setShowPreview }) => ({
+  const {
+    file,
+    setFile,
+    showPreview,
+    setShowPreview,
+    showEmoji,
+    setShowEmoji
+  } = useStore(
+    ({
       file,
       setFile,
       showPreview,
-      setShowPreview
+      setShowPreview,
+      showEmoji,
+      setShowEmoji
+    }) => ({
+      file,
+      setFile,
+      showPreview,
+      setShowPreview,
+      showEmoji,
+      setShowEmoji
     })
   )
   const [text, setText] = useState('')
@@ -59,6 +75,10 @@ export default function MessageInput({ sendMessage }) {
     }
 
     sendMessage(message)
+
+    if (showEmoji) {
+      setShowEmoji(false)
+    }
 
     setText('')
     setFile(null)

@@ -50,7 +50,7 @@ export const NameInput = () => {
             onChange={onChange}
           />
         </div>
-        <div class='visually-hidden'>
+        <div className='visually-hidden'>
           <label htmlFor='roomId'>Enter room ID</label>
           <input
             type='text'

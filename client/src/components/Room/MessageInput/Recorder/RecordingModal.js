@@ -78,7 +78,7 @@ export default function RecordingModal({ setShowModal }) {
 
         {isRecordingStarted() && <p>{recording ? 'Recording...' : 'Paused'}</p>}
 
-        <video ref={videoRef} autoPlay />
+        <video ref={videoRef} autoPlay muted />
 
         <div className='controls'>
           <button className='btn play' onClick={start}>

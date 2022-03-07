@@ -11,6 +11,7 @@ import Recorder from './Recorder/Recorder'
 
 export default function MessageInput({ sendMessage }) {
   const user = storage.get(USER_KEY)
+  const state = useStore((state) => state)
   const {
     file,
     setFile,
@@ -18,23 +19,7 @@ export default function MessageInput({ sendMessage }) {
     setShowPreview,
     showEmoji,
     setShowEmoji
-  } = useStore(
-    ({
-      file,
-      setFile,
-      showPreview,
-      setShowPreview,
-      showEmoji,
-      setShowEmoji
-    }) => ({
-      file,
-      setFile,
-      showPreview,
-      setShowPreview,
-      showEmoji,
-      setShowEmoji
-    })
-  )
+  } = state
   const [text, setText] = useState('')
   const [submitDisabled, setSubmitDisabled] = useState(true)
   const inputRef = useRef()
